@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.less";
 import {
   BrowserRouter as Router,
   Switch,
