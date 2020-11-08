@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "antd";
 
-const ContextPage = () => {
+const ContentPage = () => {
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -15,4 +15,4 @@ const ContextPage = () => {
     );
 };
 
-export default ContextPage;
+export default ContentPage;

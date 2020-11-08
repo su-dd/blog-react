@@ -28,7 +28,12 @@ module.exports = {
       options: {
         lessLoaderOptions: {
           lessOptions: {
-            modifyVars: { '@primary-color': '#1DA57A' },
+            modifyVars: {
+               '@primary-color': '#1DA57A',
+               'link-color': '#1DA57A',
+               'border-radius-base': '2px',
+               '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
+              },
             javascriptEnabled: true,
           },
         },
