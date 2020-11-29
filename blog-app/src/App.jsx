@@ -1,16 +1,17 @@
 import React from "react";
-import "./App.less";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  // Link
-} from "react-router-dom";
+import
+  {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    // Link
+  } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import BasicLayout from "./layout/BasicLayout";
 
-const App = () => {
+const App = () =>
+{
   return (
     <div className="App">
       <Router>
