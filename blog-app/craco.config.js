@@ -33,7 +33,7 @@ module.exports = {
                '@primary-color': '#1DA57A',
                'link-color': '#1DA57A',
                'border-radius-base': '2px',
-               '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
+              //  '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
               },
             javascriptEnabled: true,
           },
