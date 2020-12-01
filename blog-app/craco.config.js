@@ -14,7 +14,6 @@ module.exports = {
       '@pages': pathResolve('src/pages'),
       '@store': pathResolve('src/store'),
       '@utils': pathResolve('src/utils')
-      // 此处是一个示例，实际可根据各自需求配置
     }
   },
   babel: {
@@ -33,7 +32,7 @@ module.exports = {
                '@primary-color': '#1DA57A',
                'link-color': '#1DA57A',
                'border-radius-base': '2px',
-              //  '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
+               '@heading-color': 'rgba(255, 255, 255, 0.85)', // 标题色
               },
             javascriptEnabled: true,
           },
