@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import
   {
     BrowserRouter as Router,
@@ -7,7 +7,7 @@ import
     // Link
   } from "react-router-dom";
 
-import Home from "./pages/Home";
+import routers from '@/router/router';
 
 const App = () =>
 {
@@ -15,9 +15,14 @@ const App = () =>
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
+          {routers.map((r, key) => (
+            <Route
+              component={r.component}
+              exact={!!r.exact}
+              key={key}
+              path={r.path}
+            />
+          ))}
         </Switch>
       </Router>
     </div>
