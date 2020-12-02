@@ -168,6 +168,16 @@ F.启动mongodb
 
     /usr/local/mongodb/bin/mongod --dbpath=/var/mongodb/data --logpath /var/mongodb/logs/log.log -fork
 
+报错：
+
+```
+/usr/local/mongodb/bin/mongod: error while loading shared libraries: libcrypto.so.10: cannot open shared object file: No such file or directory
+```
+
+解决：yum install compat-openssl10
+
+
+
 G.看到如下信息说明已经安装完成并成功启动:
 
     forked process:18394
@@ -187,6 +197,16 @@ F.tips：给mongodb加密码
 首先我们进入mongo，添加帐号密码
 
 mongo
+
+​	ps：问题：-bash: mongo: command not found
+
+​	建议超级链接：
+
+​		sudo ln -s /usr/local/mongodb/bin/mongo /usr/bin/mongo
+
+​		sudo ln -s /usr/local/mongodb/bin/mongod /usr/bin/mongod
+
+
 
 进入数据库
 admin
@@ -301,7 +321,7 @@ tips:
 
 去到上一层，
 
-![img](https://pic2.zhimg.com/80/v2-4904c2cdbe7fd753d53af335ab1face9_720w.jpg)
+![img](https://pic2.zhimg.com/80/v2-4904c2cdbe7fd753d53af335ab1face9_720w.jpg) 
 
 
 

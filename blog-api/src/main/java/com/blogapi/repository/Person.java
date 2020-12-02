@@ -1,4 +1,4 @@
-package com.example.blogapi;
+package com.blogapi.repository;
 
 import org.springframework.data.annotation.Id;
 

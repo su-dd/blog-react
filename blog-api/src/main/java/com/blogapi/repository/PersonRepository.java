@@ -1,4 +1,4 @@
-package com.example.blogapi;
+package com.blogapi.repository;
 
 import java.util.List;
 
