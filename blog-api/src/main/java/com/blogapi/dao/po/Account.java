@@ -1,7 +1,6 @@
-package com.blogapi.repository.dao;
+package com.blogapi.dao.po;
 
 import org.springframework.data.annotation.Id;
-
 public class Account {
     @Id
     private String id;
