@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
-public class Signs {
+public class Sign {
     @Id
     private String id;
     private String name;

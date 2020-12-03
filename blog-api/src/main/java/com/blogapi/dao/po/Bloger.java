@@ -5,11 +5,19 @@ import org.springframework.data.annotation.Id;
 public class Bloger {
     @Id
     private String id;
+    private String accoutId;
     private String user;
-    private String pwd;
     private String mail;
     private String hobby;
     private String word;
+
+    public String getAccoutId() {
+        return accoutId;
+    }
+
+    public void setAccoutId(String accoutId) {
+        this.accoutId = accoutId;
+    }
 
     public String getUser() {
         return user;
@@ -17,14 +25,6 @@ public class Bloger {
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 
     public String getMail() {

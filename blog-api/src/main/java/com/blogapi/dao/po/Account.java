@@ -9,6 +9,12 @@ public class Account {
 
     private String pwd;
 
+    private boolean isAdmin;
+
+    private boolean isBloger;
+
+    private boolean isReader;
+
     public String getUser() {
         return user;
     }
@@ -23,5 +29,29 @@ public class Account {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isBloger() {
+        return isBloger;
+    }
+
+    public void setBloger(boolean bloger) {
+        isBloger = bloger;
+    }
+
+    public boolean isReader() {
+        return isReader;
+    }
+
+    public void setReader(boolean reader) {
+        isReader = reader;
     }
 }

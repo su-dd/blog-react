@@ -4,10 +4,10 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
-public class Articles {
+public class Article {
     @Id
     private String id;
-    private String seriesid;
+    private String seriesId;
     private List<String> signs;
     private String createDate;
     private String updateDate;
@@ -15,14 +15,14 @@ public class Articles {
     private String title;
     private String author;
     private String body;
-    private List<comment> comments;
+    private List<String> comments;
 
     public String getSeriesid() {
-        return seriesid;
+        return seriesId;
     }
 
     public void setSeriesid(String seriesid) {
-        this.seriesid = seriesid;
+        this.seriesId = seriesid;
     }
 
     public List<String> getSigns() {
@@ -81,11 +81,11 @@ public class Articles {
         this.body = body;
     }
 
-    public List<comment> getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<comment> comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
     }
 }

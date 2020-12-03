@@ -1,19 +1,33 @@
 package com.blogapi.dao.po;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
-public class comment {
-    private List<comment> comments;
+public class Comment {
+    @Id
+    private String id;
+
+    private String articleId;
+    private String commentId;
     private String createDate;
     private String updateDate;
     private String body;
 
-    public List<comment> getComments() {
-        return comments;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setComments(List<comment> comments) {
-        this.comments = comments;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public String getCreateDate() {
