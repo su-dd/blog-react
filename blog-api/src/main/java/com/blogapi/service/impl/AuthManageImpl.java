@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthManageImpl implements AuthManage {
-    @Autowired
+
     private AccountRepository accountRepository;
+
+    @Autowired
+    public AuthManageImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public boolean isAdmin(String id) {

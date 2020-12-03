@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
+@RequestMapping("/Auth")
 public class AuthManageController {
-    @Autowired
+
     private AuthManageImpl authManageImpl;
 
-//    @GetMapping(path = "/isAdmin")
-    @PostMapping(path = "/isAdmin")
-    public ResponseEntity isAdmin(@RequestParam("id") String id) throws Exception{
+    @Autowired
+    public AuthManageController(AuthManageImpl authManageImpl) {
+        this.authManageImpl = authManageImpl;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity isAdmin(@PathVariable String id) {
         HashMap<String, Object> resp = new HashMap<>();
         boolean result = authManageImpl.isAdmin(id);
         resp.put("isAdmin", result);
