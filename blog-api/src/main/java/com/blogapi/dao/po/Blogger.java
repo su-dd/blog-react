@@ -2,21 +2,21 @@ package com.blogapi.dao.po;
 
 import org.springframework.data.annotation.Id;
 
-public class Bloger {
+public class Blogger {
     @Id
     private String id;
-    private String accoutId;
+    private String accountId;
     private String user;
     private String mail;
     private String hobby;
     private String word;
 
-    public String getAccoutId() {
-        return accoutId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setAccoutId(String accoutId) {
-        this.accoutId = accoutId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public String getUser() {

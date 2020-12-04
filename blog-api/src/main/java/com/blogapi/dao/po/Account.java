@@ -1,6 +1,9 @@
 package com.blogapi.dao.po;
 
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
+
 public class Account {
     @Id
     private String id;
@@ -9,11 +12,15 @@ public class Account {
 
     private String pwd;
 
-    private boolean isAdmin;
+    private List<String> roles;
 
-    private boolean isBloger;
+    public String getId() {
+        return id;
+    }
 
-    private boolean isReader;
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUser() {
         return user;
@@ -31,27 +38,23 @@ public class Account {
         this.pwd = pwd;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isAdmin() {
+        return getRoles().contains("admin");
     }
 
     public boolean isBloger() {
-        return isBloger;
-    }
-
-    public void setBloger(boolean bloger) {
-        isBloger = bloger;
+        return getRoles().contains("blogger");
     }
 
     public boolean isReader() {
-        return isReader;
-    }
-
-    public void setReader(boolean reader) {
-        isReader = reader;
+        return getRoles().contains("reader");
     }
 }
