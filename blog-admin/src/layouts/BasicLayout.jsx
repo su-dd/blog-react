@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { createBrowserHistory } from "history";
 
 import BlogMenu from "@/components/BlogMenu";
 import BlogHeader from "@/components/BlogHeader";
@@ -13,6 +14,9 @@ import {
 
 import { Layout } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
+
+
+const history = createBrowserHistory();
 
 const BasicLayout = () => {
 
@@ -30,7 +34,7 @@ const BasicLayout = () => {
 
   return (
     <Layout>
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
