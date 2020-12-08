@@ -1,6 +1,5 @@
-import './App.less';
 import BasicLayout from "@/layouts/BasicLayout";
-
+import { hot } from 'react-hot-loader'
 function App() {
   return (
     <div className="App">
@@ -9,4 +8,4 @@ function App() {
   );
 }
 
-export default App;
+export default hot(module)(App);
