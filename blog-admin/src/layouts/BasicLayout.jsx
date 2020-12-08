@@ -1,16 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { createBrowserHistory } from "history";
 
 import BlogMenu from "@/components/BlogMenu";
 import BlogHeader from "@/components/BlogHeader";
 import routers from "@/routers/routers";
 
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import
+  {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 import { Layout } from "antd";
 const { Header, Footer, Sider, Content } = Layout;
@@ -18,9 +19,11 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const history = createBrowserHistory();
 
-const BasicLayout = () => {
+const BasicLayout = () =>
+{
 
-  const RouteWithSubRoutes = (route) => {
+  const RouteWithSubRoutes = (route) =>
+  {
     return (
       <Route
         path={route.path}
@@ -38,15 +41,17 @@ const BasicLayout = () => {
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
-          onBreakpoint={broken => {
+          onBreakpoint={broken =>
+          {
             console.log(broken);
           }}
-          onCollapse={(collapsed, type) => {
+          onCollapse={(collapsed, type) =>
+          {
             console.log(collapsed, type);
           }}
         >
           <div className="logo" />
-          <BlogMenu/>
+          <BlogMenu />
         </Sider>
         <Layout>
           <Header className="site-layout-sub-header-background" style={{ padding: 0, background: '#fff' }}>
@@ -65,7 +70,7 @@ const BasicLayout = () => {
         </Layout>
       </BrowserRouter>
     </Layout>
-    );
+  );
 }
 
 export default BasicLayout;

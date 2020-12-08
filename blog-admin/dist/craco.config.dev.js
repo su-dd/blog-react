@@ -24,6 +24,15 @@ module.exports = _defineProperty({
       '@pages': pathResolve('src/pages'),
       '@store': pathResolve('src/store'),
       '@utils': pathResolve('src/utils')
+    },
+    configure: function configure(webpackConfig, _ref) {
+      var env = _ref.env,
+          paths = _ref.paths;
+      //ts和less编译后的文件
+      webpackConfig.output.path = path.resolve(__dirname, "dist"); //public中的文件
+
+      paths.appBuild = path.resolve(__dirname, "dist");
+      return webpackConfig;
     }
   },
   babel: {
