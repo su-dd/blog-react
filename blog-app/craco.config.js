@@ -30,8 +30,8 @@ module.exports = {
           lessOptions: {
             modifyVars: {
                '@primary-color': '#1DA57A',
-               'link-color': '#1DA57A',
-               'border-radius-base': '2px',
+               '@link-color': '#1DA57A',
+               '@border-radius-base': '2px',
                '@heading-color': 'rgba(255, 255, 255, 0.85)', // 标题色
               },
             javascriptEnabled: true,
