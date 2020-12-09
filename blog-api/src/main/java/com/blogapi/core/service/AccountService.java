@@ -1,8 +1,8 @@
-package com.blogapi.service;
+package com.blogapi.core.service;
 
-import com.blogapi.dao.po.Account;
+import com.blogapi.core.entity.Account;
 
-public interface AuthManage {
+public interface AccountService {
     // 管理员
     boolean isAdmin(String id);
 
