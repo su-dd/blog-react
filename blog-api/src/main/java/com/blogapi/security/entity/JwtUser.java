@@ -10,7 +10,7 @@ public class JwtUser implements UserDetails {
     /**
      * 用户ID
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户名
      */
@@ -44,7 +44,11 @@ public class JwtUser implements UserDetails {
      */
     private boolean isEnabled = true;
 
-    public JwtUser(Long userId, String username, String password, String status, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(String userId,
+                   String username,
+                   String password,
+                   String status,
+                   Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.username = username;
         this.password = password;

@@ -7,6 +7,8 @@ import com.blogapi.core.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -42,6 +44,19 @@ public class AccountServiceImpl implements AccountService {
             return account.getRoles().contains("reader");
         }
         return true;
+    }
+
+    @Override
+    public List<Account> findAll() {
+        return accountDao.findAll();
+    }
+
+    @Override
+    public Account findOne(String id) {
+        if (accountDao.existsById(id)){
+            return accountDao.findById(id).get();
+        }
+        return new Account();
     }
 
     @Override
