@@ -8,11 +8,7 @@ spring:
       INDENT_OUTPUT: true
   # 配置数据源
   data.mongodb:
-    host: 47.105.54.201
-    port: 27017
-    database: myblog
-    username: bloger
-    password: 234qwe
+
 
 # JWT配置
 jwt:
