@@ -39,10 +39,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean isReader(String id) {
-        if (accountDao.existsById(id)){
-            Account account = accountDao.findById(id).get();
-            return account.getRoles().contains("reader");
-        }
+//        if (accountDao.existsById(id)){
+//            Account account = accountDao.findById(id).get();
+//            return account.getRoles().contains("reader");
+//        }
         return true;
     }
 

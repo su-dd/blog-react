@@ -1,17 +1,15 @@
 package com.blogapi.security.jwt;
 
-import com.alibaba.fastjson.JSONObject;
 import com.blogapi.common.config.JwtConfig;
-import com.blogapi.core.entity.Account;
-import io.jsonwebtoken.Claims;
+import com.blogapi.common.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -19,58 +17,53 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
-@Slf4j
-public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter {
-
-    public JwtAuthenticationTokenFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
+@SuppressWarnings("SpringJavaAutowiringInspection")
+@Component
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
         // 获取请求头中JWT的Token
         String tokenHeader = request.getHeader(JwtConfig.tokenHeader);
         if (null != tokenHeader && tokenHeader.startsWith(JwtConfig.tokenPrefix)) {
             try {
                 // 截取Jwt前缀
                 String token = tokenHeader.replace(JwtConfig.tokenPrefix, "");
-                // 解析Jwt
-                Claims claims = Jwts.parser()
-                        .setSigningKey(JwtConfig.secret)
-                        .parseClaimsJws(token)
-                        .getBody();
                 // 获取用户名
-                String username = claims.getSubject();
-                String userId = claims.getId();
-                if (!StringUtils.isEmpty(username) && !StringUtils.isEmpty(userId)) {
-                    // 获取角色
-                    List<GrantedAuthority> authorityList = new ArrayList<>();
-                    String authority = claims.get("authorities").toString();
-                    if (!StringUtils.isEmpty(authority)) {
-                        List<Map<String,String>> authorityMap = JSONObject.parseObject(authority, List.class);
-                        for(Map<String, String> role : authorityMap){
-                            if (!StringUtils.isEmpty(role)) {
-                                authorityList.add(new SimpleGrantedAuthority(role.get("authority")));
-                            }
-                        }
+                String username = jwtTokenUtil.getUsernameFromToken(token);
+
+                logger.info("checking authentication " + username);
+
+                if (username != null
+                        && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                    if (jwtTokenUtil.validateToken(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken authenticationToken
+                                = new UsernamePasswordAuthenticationToken(
+                                        userDetails, null, userDetails.getAuthorities()
+                        );
+
+                        authenticationToken.setDetails(
+                                new WebAuthenticationDetailsSource().buildDetails(request)
+                        );
+                        logger.info("authenticated user " + username + ", setting security context");
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     }
                 }
-
-                // 组装参数
-                Account account = new Account();
-                account.setUser(claims.getSubject());
-                account.setId(claims.getId());
-
             } catch (ExpiredJwtException e){
-                log.info("Token过期");
+                logger.info("Token过期");
             } catch (Exception e) {
-                log.info("Token无效");
+                logger.info("Token无效");
             }
         }
-        super.doFilterInternal(request, response, chain);
+        chain.doFilter(request, response);
     }
 }
