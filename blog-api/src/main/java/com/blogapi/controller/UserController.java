@@ -1,7 +1,7 @@
 package com.blogapi.controller;
 
-import com.blogapi.core.entity.Account;
-import com.blogapi.core.service.AccountService;
+import com.blogapi.core.entity.User;
+import com.blogapi.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,46 +21,46 @@ import java.util.List;
 @RestController
 @RequestMapping("/Account")
 @PreAuthorize("hasRole('ADMIN')")
-public class AccountController {
+public class UserController {
 
-    final private AccountService accountService;
+    final private UserService userService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/auths/{id}", method = RequestMethod.POST)
     public ResponseEntity auths(@PathVariable String id) {
         HashMap<String, Object> resp = new HashMap<>();
-        resp.put("isAdmin", accountService.isAdmin(id));
-        resp.put("isBlogger", accountService.isBlogger(id));
-        resp.put("isReader", accountService.isReader(id));
+        resp.put("isAdmin", userService.isAdmin(id));
+        resp.put("isBlogger", userService.isBlogger(id));
+        resp.put("isReader", userService.isReader(id));
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Accounts",method = RequestMethod.POST)
-    public List<Account> getAccouts() {
-        return accountService.findAll();
+    public List<User> getAccouts() {
+        return userService.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Account findAccout(@PathVariable String id) {
-        return accountService.findOne(id);
+    public User findAccout(@PathVariable String id) {
+        return userService.findOne(id);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Account addAccount(@RequestBody Account account) {
-        return accountService.insert(account);
+    public User addAccount(@RequestBody User user) {
+        return userService.insert(user);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteAccount(@PathVariable String id) {
-        accountService.delete(id);
+        userService.delete(id);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Account updateAccount(@RequestBody Account account) {
-        return accountService.update(account);
+    public User updateAccount(@RequestBody User user) {
+        return userService.update(user);
     }
 }

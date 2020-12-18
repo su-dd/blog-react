@@ -1,6 +1,6 @@
-package com.blogapi.security.service.factory;
+package com.blogapi.security.entity.factory;
 
-import com.blogapi.core.entity.Account;
+import com.blogapi.core.entity.User;
 import com.blogapi.security.entity.JwtUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,13 +13,13 @@ public class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser createJwtUser(Account account) {
+    public static JwtUser createJwtUser(User user) {
         return new JwtUser(
-                account.getId(),
-                account.getUser(),
-                account.getPwd(),
+                user.getId(),
+                user.getUserName(),
+                user.getPassword(),
                 "NORMAL",
-                mapToGrantedAuthorities(account.getRoles())
+                mapToGrantedAuthorities(user.getRoles())
                 );
     }
 

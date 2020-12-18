@@ -32,6 +32,8 @@ public class JwtConfig {
      */
     public static String antMatchers;
 
+    public static String issuer;
+
     public static void setSecret(String secret) {
         JwtConfig.secret = secret;
     }

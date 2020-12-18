@@ -2,7 +2,7 @@ package com.blogapi.controller;
 
 
 import com.blogapi.common.config.JwtConfig;
-import com.blogapi.core.entity.Account;
+import com.blogapi.core.entity.User;
 import com.blogapi.core.service.AuthService;
 import com.blogapi.security.handler.JwtAuthRequest;
 import com.blogapi.security.handler.JwtAuthResponse;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 public class AuthController {
@@ -25,29 +26,29 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // 登陆
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public ResponseEntity<?> login(
-            @RequestBody JwtAuthRequest jwtAuthRequest) throws AuthenticationException {
-        final String token = authService.login(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword());
-        return ResponseEntity.ok(new JwtAuthResponse(token));
-    }
-
+//    // 登陆
+//    @RequestMapping(value = "/login" , method = RequestMethod.POST)
+//    public ResponseEntity<?> login(
+//            @RequestBody JwtAuthRequest jwtAuthRequest) throws AuthenticationException {
+//        final String token = authService.login(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword());
+//        return ResponseEntity.ok(new JwtAuthResponse(token));
+//    }
+//
     // 注册
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Account register(@RequestBody Account account) throws AuthenticationException {
-        return authService.register(account);
+    public User register(@RequestBody Map<String, String> registerUser) throws AuthenticationException {
+        return authService.register(registerUser);
     }
-
-    // 刷新
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> refresh(HttpServletRequest request) throws AuthenticationException {
-        String token = request.getHeader(JwtConfig.tokenHeader);
-        String refreshedToken = authService.refresh(token);
-        if (refreshedToken == null) {
-            return ResponseEntity.badRequest().body(null);
-        } else {
-            return ResponseEntity.ok(new JwtAuthResponse(refreshedToken));
-        }
-    }
+//
+//    // 刷新
+//    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+//    public ResponseEntity<?> refresh(HttpServletRequest request) throws AuthenticationException {
+//        String token = request.getHeader(JwtConfig.tokenHeader);
+//        String refreshedToken = authService.refresh(token);
+//        if (refreshedToken == null) {
+//            return ResponseEntity.badRequest().body(null);
+//        } else {
+//            return ResponseEntity.ok(new JwtAuthResponse(refreshedToken));
+//        }
+//    }
 }

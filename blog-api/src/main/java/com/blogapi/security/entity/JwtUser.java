@@ -28,19 +28,19 @@ public class JwtUser implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
     /**
-     * 账户是否过期
+     * 账户是否过期， true：未过期
      */
-    private boolean isAccountNonExpired = false;
+    private boolean isAccountNonExpired = true;
     /**
-     * 账户是否被锁定
+     * 账户是否被锁定 true：未锁定
      */
-    private boolean isAccountNonLocked = false;
+    private boolean isAccountNonLocked = true;
     /**
-     * 证书是否过期
+     * 证书是否过期 true：未过期
      */
-    private boolean isCredentialsNonExpired = false;
+    private boolean isCredentialsNonExpired = true;
     /**
-     * 账户是否有效
+     * 账户是否有效 true：有效
      */
     private boolean isEnabled = true;
 

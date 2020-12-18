@@ -1,10 +1,10 @@
 package com.blogapi.core.service;
 
-import com.blogapi.core.entity.Account;
+import com.blogapi.core.entity.User;
 
 import java.util.List;
 
-public interface AccountService {
+public interface UserService {
     // 管理员
     boolean isAdmin(String id);
 
@@ -15,15 +15,15 @@ public interface AccountService {
     boolean isReader(String id);
 
     // 查找全部
-    List<Account> findAll();
+    List<User> findAll();
 
     // 查找
-    Account findOne(String id);
+    User findOne(String id);
 
     // 插入
-    Account insert(Account account);
+    User insert(User user);
     // 删除
     void delete(String id);
     // 修改
-    Account update(Account account);
+    User update(User user);
 }
