@@ -1,7 +1,7 @@
-package com.blogapi.security.jwt;
+package com.blogapi.core.security.jwt;
 
-import com.blogapi.common.config.JwtConfig;
-import com.blogapi.common.util.JwtTokenUtil;
+import com.blogapi.core.common.config.JwtConfig;
+import com.blogapi.core.common.util.JwtTokenUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 // 鉴权
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }

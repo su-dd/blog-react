@@ -1,7 +1,7 @@
-package com.blogapi.security.entity.factory;
+package com.blogapi.core.security.entity.factory;
 
 import com.blogapi.core.entity.User;
-import com.blogapi.security.entity.JwtUser;
+import com.blogapi.core.security.entity.JwtUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

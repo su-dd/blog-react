@@ -1,27 +1,24 @@
-package com.blogapi.security.jwt;
+package com.blogapi.core.security.jwt;
 
-import com.blogapi.common.config.JwtConfig;
-import com.blogapi.common.util.JwtTokenUtil;
+import com.blogapi.core.common.config.JwtConfig;
+import com.blogapi.core.common.util.JwtTokenUtil;
 import com.blogapi.core.entity.User;
-import com.blogapi.security.entity.JwtUser;
+import com.blogapi.core.security.entity.JwtUser;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.xml.internal.fastinfoset.stax.factory.StAXOutputFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@Component
 // 登陆验证
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

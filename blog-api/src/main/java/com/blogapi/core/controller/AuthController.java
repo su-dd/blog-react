@@ -1,20 +1,15 @@
-package com.blogapi.controller;
+package com.blogapi.core.controller;
 
 
-import com.blogapi.common.config.JwtConfig;
 import com.blogapi.core.entity.User;
 import com.blogapi.core.service.AuthService;
-import com.blogapi.security.handler.JwtAuthRequest;
-import com.blogapi.security.handler.JwtAuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.AuthenticationException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController

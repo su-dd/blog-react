@@ -1,10 +1,9 @@
-package com.blogapi.security.entity;
+package com.blogapi.core.security.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 public class JwtUser implements UserDetails {
     /**

@@ -1,6 +1,6 @@
-package com.blogapi.common.util;
+package com.blogapi.core.common.util;
 
-import com.blogapi.common.config.JwtConfig;
+import com.blogapi.core.common.config.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

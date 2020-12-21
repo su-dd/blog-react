@@ -1,4 +1,4 @@
-package com.blogapi.common.config;
+package com.blogapi.core.common.config;
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,8 +1,8 @@
-package com.blogapi.security.service.impl;
+package com.blogapi.core.security.service;
 
 import com.blogapi.core.dao.UserDao;
 import com.blogapi.core.entity.User;
-import com.blogapi.security.entity.factory.JwtUserFactory;
+import com.blogapi.core.security.entity.factory.JwtUserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

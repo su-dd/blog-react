@@ -1,34 +1,43 @@
-package com.blogapi.common.config;
+package com.blogapi.core.common.config;
 
-import com.blogapi.security.jwt.JwtAuthenticationFilter;
-import com.blogapi.security.jwt.JwtAuthorizationFilter;
+import com.blogapi.core.common.config.JwtConfig;
+import com.blogapi.core.security.jwt.JwtAuthenticationFilter;
+import com.blogapi.core.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity  //启用Web安全
-@EnableGlobalMethodSecurity(prePostEnabled = true) //开启权限注解,默认是关闭的
+//@EnableGlobalMethodSecurity(prePostEnabled = true) //开启权限注解,默认是关闭的
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailServiceImpl")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    protected AuthenticationManager authenticationManager;
+
     // 密码编码器
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER) // 提供一个bean，处理： a bean of type 'org.springframework.security.authentication.AuthenticationManager' that could not be found.
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     /**
@@ -41,15 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
-    /*
-    * 用来配置Filter链
-    * 配置WebSecurity，设置无需授权的url
-    * */
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        super.configure(web);
-//    }
 
 
     /*
@@ -64,16 +64,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 // 允许对于网站静态资源的无授权访问
-                .antMatchers(JwtConfig.antMatchers).permitAll()
+//                .antMatchers(JwtConfig.antMatchers).permitAll()
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/auth/**").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()
                 // 验证登陆
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthenticationFilter(this.authenticationManager))
                 // 鉴权
-                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(this.authenticationManager))
                 // 基于token，所有不需要session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

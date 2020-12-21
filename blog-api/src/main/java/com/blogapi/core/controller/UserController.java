@@ -1,4 +1,4 @@
-package com.blogapi.controller;
+package com.blogapi.core.controller;
 
 import com.blogapi.core.entity.User;
 import com.blogapi.core.service.UserService;
