@@ -21,14 +21,14 @@ public class AuthController {
         this.authService = authService;
     }
 
-//    // 登陆
+    // 登陆
 //    @RequestMapping(value = "/login" , method = RequestMethod.POST)
 //    public ResponseEntity<?> login(
 //            @RequestBody JwtAuthRequest jwtAuthRequest) throws AuthenticationException {
 //        final String token = authService.login(jwtAuthRequest.getUsername(), jwtAuthRequest.getPassword());
 //        return ResponseEntity.ok(new JwtAuthResponse(token));
 //    }
-//
+
     // 注册
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public User register(@RequestBody Map<String, String> registerUser) throws AuthenticationException {

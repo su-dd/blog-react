@@ -1,18 +1,27 @@
 package com.blogapi.core.service.impl;
 
+import com.blogapi.core.dao.UserDao;
 import com.blogapi.core.entity.User;
 import com.blogapi.core.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 //    private AuthenticationManager authenticationManager;
 //    private UserDetailsService userDetailsService;
 //    private JwtTokenUtil jwtTokenUtil;
-//    private AccountDao accountDao;
-//
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 //    @Autowired
 //    public AuthServiceImpl(AuthenticationManager authenticationManager,
 //                           UserDetailsService userDetailsService,
@@ -26,17 +35,18 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User register(Map<String,String> registerUser) {
-//        final String username = account.getUser();
-//        if (accountDao.findByUser(username) != null) {
-//            return null;
-//        }
-//
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        final String rawPassword = account.getPwd();
-//        account.setPwd(encoder.encode(rawPassword));
-//        account.setRoles(asList("ROLE_Blogger"));
-//        return accountDao.insert(account);
-        return null;
+
+        final String username = registerUser.get("username");
+        if (userDao.findUserByUserName(username) != null) {
+            return null;
+        }
+
+        final String password = registerUser.get("password");
+        User user = new User();
+        user.setUserName(username);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setRoles(asList("ROLE_Blogger"));
+        return userDao.insert(user);
     }
 
     @Override

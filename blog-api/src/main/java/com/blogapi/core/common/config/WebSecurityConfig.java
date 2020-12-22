@@ -1,6 +1,8 @@
 package com.blogapi.core.common.config;
 
 import com.blogapi.core.common.config.JwtConfig;
+import com.blogapi.core.security.handler.JwtAccessDeniedHandler;
+import com.blogapi.core.security.handler.JwtAuthenticationEntryPoint;
 import com.blogapi.core.security.jwt.JwtAuthenticationFilter;
 import com.blogapi.core.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,7 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity  //启用Web安全
-//@EnableGlobalMethodSecurity(prePostEnabled = true) //开启权限注解,默认是关闭的
+@EnableGlobalMethodSecurity(prePostEnabled = true) //开启权限注解,默认是关闭的
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailServiceImpl")
@@ -63,19 +66,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity
                 .authorizeRequests()
-                // 允许对于网站静态资源的无授权访问
+                    // 允许对于网站静态资源的无授权访问
 //                .antMatchers(JwtConfig.antMatchers).permitAll()
-                // 对于获取token的rest api要允许匿名访问
-                .antMatchers("/auth/**").permitAll()
-                // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                .and()
+                    // 对于获取token的rest api要允许匿名访问
+                    .antMatchers("/auth/**").permitAll()
+                    // 除上面外的所有请求全部需要鉴权认证
+                    .anyRequest().authenticated()
+                    .and()
                 // 验证登陆
                 .addFilter(new JwtAuthenticationFilter(this.authenticationManager))
                 // 鉴权
                 .addFilter(new JwtAuthorizationFilter(this.authenticationManager))
                 // 基于token，所有不需要session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                // 异常处理配置
+                .exceptionHandling()
+                    // 配置未登录自定义处理类
+                    .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                    // 添加无权限时的处理
+                    .accessDeniedHandler(new JwtAccessDeniedHandler());
     }
 }
 
