@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Account")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('Admin')")
 public class UserController {
 
     final private UserService userService;

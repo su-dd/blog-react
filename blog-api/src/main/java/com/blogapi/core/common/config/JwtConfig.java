@@ -1,56 +1,38 @@
 package com.blogapi.core.common.config;
 
-import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * JWTp配置类
+ * JWT配置类
  */
-@Getter
 @Component
-@ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
     /**
      * 密钥KEY
      */
-    public static String secret;
+    public static String secret = "JWTSecret";
     /**
      * TokenKey
      */
-    public static String tokenHeader;
+    public static String tokenHeader = "Authorization";
     /**
      * Token前缀字符
      */
-    public static String tokenPrefix;
+    public static String tokenPrefix = "Bearer ";
     /**
-     * 过期时间
+     * 过期时间 单位:秒; 1天后过期=86400 7天后过期=604800
      */
-    public static Integer expiration;
+    public static Integer expiration = 86400;
     /**
      * 不需要认证的接口
      */
-    public static String antMatchers;
+    public static String antMatchers = "/index/**,/login/**,/favicon.ico";
 
-    public static String issuer;
+    /**
+     * 签发人
+     * */
+    public static String issuer = "daidai";
 
-    public static void setSecret(String secret) {
-        JwtConfig.secret = secret;
-    }
-
-    public static void setTokenHeader(String tokenHeader) {
-        JwtConfig.tokenHeader = tokenHeader;
-    }
-
-    public static void setTokenPrefix(String tokenPrefix) {
-        JwtConfig.tokenPrefix = tokenPrefix;
-    }
-
-    public static void setExpiration(Integer expiration) {
-        JwtConfig.expiration = expiration * 1000;
-    }
-
-    public static void setAntMatchers(String antMatchers) {
-        JwtConfig.antMatchers = antMatchers;
-    }
+    // 角色的key
+    public static final String ROLE_CLAIMS = "rol";
 }

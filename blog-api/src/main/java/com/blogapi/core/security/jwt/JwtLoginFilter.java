@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -19,14 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 //
 // 登陆验证
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtLoginFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
         super.setFilterProcessesUrl("/auth/login");
     }
@@ -37,7 +39,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletRequest request,
             HttpServletResponse response) throws AuthenticationException {
         // 从输入流中获取到登陆的信息
-        try{
+        try {
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 
             return authenticationManager.authenticate(
@@ -57,15 +59,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
-        //
         JwtUser jwtUser = (JwtUser) authResult.getPrincipal();
         System.out.println("jwtUser: " + jwtUser.toString());
-        String token = JwtTokenUtil.createToken(jwtUser.getUsername());
+
+        StringBuilder role = new StringBuilder("");
+        Collection<? extends GrantedAuthority> authorities = jwtUser.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            role.append("&").append(authority.getAuthority());
+        }
+        role.deleteCharAt(0);
+
+        String token = JwtTokenUtil.createToken(jwtUser.getUsername(), role.toString());
         // 返回创建成功的token
         // 但是这里创建的token只是单纯的token
         // 按照jwt的规定，最后请求的格式应该是 `Bearer token`
-        StringBuilder stringBuilder = new StringBuilder(JwtConfig.tokenPrefix);
-        response.setHeader("token", stringBuilder.append(" ").append(token).toString());
+        response.setHeader("token", JwtConfig.tokenPrefix + token);
     }
 
     // 失败的时候调用的方法

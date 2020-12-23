@@ -7,19 +7,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 
 @Component
 public class JwtTokenUtil {
-    public static final String TOKEN_HEADER = JwtConfig.tokenHeader;
-    public static final String TOKEN_PREFIX = "Bearer ";
-
-    private static final String SECRET = "jwtsecretdemo";
-    private static final String ISS = "echisan";
-
     // 创建token
-    public static String createToken(String username) {
+    public static String createToken(String username, String role) {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(JwtConfig.ROLE_CLAIMS, role);
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, JwtConfig.secret)
+                .setClaims(map)
                 .setIssuer(JwtConfig.issuer)
                 .setSubject(username)
                 .setIssuedAt(new Date())

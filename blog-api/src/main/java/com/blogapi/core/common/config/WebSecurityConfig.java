@@ -1,9 +1,8 @@
 package com.blogapi.core.common.config;
 
-import com.blogapi.core.common.config.JwtConfig;
 import com.blogapi.core.security.handler.JwtAccessDeniedHandler;
 import com.blogapi.core.security.handler.JwtAuthenticationEntryPoint;
-import com.blogapi.core.security.jwt.JwtAuthenticationFilter;
+import com.blogapi.core.security.jwt.JwtLoginFilter;
 import com.blogapi.core.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,7 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-
     /*
      * 用来配置拦截保护的请求，比如什么请求放行，什么请求需要验证
      * */
@@ -67,14 +65,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                     // 允许对于网站静态资源的无授权访问
-//                .antMatchers(JwtConfig.antMatchers).permitAll()
+                    .antMatchers(JwtConfig.antMatchers).permitAll()
                     // 对于获取token的rest api要允许匿名访问
                     .antMatchers("/auth/**").permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated()
                     .and()
                 // 验证登陆
-                .addFilter(new JwtAuthenticationFilter(this.authenticationManager))
+                .addFilter(new JwtLoginFilter(this.authenticationManager))
                 // 鉴权
                 .addFilter(new JwtAuthorizationFilter(this.authenticationManager))
                 // 基于token，所有不需要session

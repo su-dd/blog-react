@@ -40,7 +40,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     // 这里从token中获取用户信息并新建一个token
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
-        String token = tokenHeader.replace(JwtConfig.tokenPrefix + " ", "");
+        String token = tokenHeader.replace(JwtConfig.tokenPrefix, "");
         String userName = JwtTokenUtil.getUsername(token);
         if (userName != null) {
             return new UsernamePasswordAuthenticationToken(userName, null, new ArrayList<>());
