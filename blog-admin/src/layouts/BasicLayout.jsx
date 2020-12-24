@@ -3,14 +3,14 @@ import { createBrowserHistory } from "history";
 
 import BlogMenu from "@/components/BlogMenu";
 import BlogHeader from "@/components/BlogHeader";
-import routers from "@/routers/routers";
+import { routers, loginPageRoute } from "@@/src/routers/routers";
 
 import
   {
     BrowserRouter,
     Switch,
     Route,
-    Link
+    Redirect
   } from "react-router-dom";
 
 import { Layout } from "antd";
@@ -21,15 +21,20 @@ const history = createBrowserHistory();
 
 const BasicLayout = () =>
 {
+  const [token, setToken] = useState(false);
 
-  const RouteWithSubRoutes = (route) =>
+  const RouteWithSubRoutes = (item) =>
   {
     return (
       <Route
-        path={route.path}
+        path={item.path}
         render={props => (
-          // pass the sub-routes down to keep nesting
-          <route.component {...props} routes={route.routes} />
+          ! item.auth ?
+            (<item.component {...props} routes={item.routes} />)
+            : (token ? <item.component {...props} routes={item.routes} />
+              : <Redirect to={{
+                pathname: loginPageRoute.path ,
+                state: { from: props.location }}}/>)
         )}
       />
     );
@@ -60,8 +65,8 @@ const BasicLayout = () =>
           <Content style={{ margin: '24px 16px 0' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <Switch>
-                {routers.map((route, i) => (
-                  <RouteWithSubRoutes key={i} {...route} />
+                {routers.map((item, i) => (
+                  <RouteWithSubRoutes key={i} {...item} />
                 ))}
               </Switch>
             </div>

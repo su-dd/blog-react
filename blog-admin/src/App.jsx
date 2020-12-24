@@ -1,5 +1,6 @@
 import BasicLayout from "@/layouts/BasicLayout";
-import { hot } from 'react-hot-loader'
+// 局部热更新
+import { hot } from 'react-hot-loader';
 function App() {
   return (
     <div className="App">
