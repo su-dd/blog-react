@@ -1,5 +1,6 @@
-package com.blogapi.core.common.config;
+package com.blogapi.core.security.config;
 
+import com.blogapi.core.security.config.JwtConfig;
 import com.blogapi.core.security.handler.JwtAccessDeniedHandler;
 import com.blogapi.core.security.handler.JwtAuthenticationEntryPoint;
 import com.blogapi.core.security.jwt.JwtLoginFilter;
@@ -37,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER) // 提供一个bean，处理： a bean of type 'org.springframework.security.authentication.AuthenticationManager' that could not be found.
+    // 提供一个bean，处理： a bean of type 'org.springframework.security.authentication.AuthenticationManager' that could not be found.
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

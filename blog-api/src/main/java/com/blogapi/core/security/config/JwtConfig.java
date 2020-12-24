@@ -1,4 +1,4 @@
-package com.blogapi.core.common.config;
+package com.blogapi.core.security.config;
 
 import org.springframework.stereotype.Component;
 
@@ -33,6 +33,9 @@ public class JwtConfig {
      * */
     public static String issuer = "daidai";
 
-    // 角色的key
-    public static final String ROLE_CLAIMS = "rol";
+    // 权限的key
+    public static final String role_claims = "rol";
+
+    // 权限的分割
+    public static final String role_claims_split = "&";
 }

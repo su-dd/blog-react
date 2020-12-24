@@ -1,7 +1,8 @@
-package com.blogapi.core.common.util;
+package com.blogapi.core.security.util;
 
-import com.blogapi.core.common.config.JwtConfig;
+import com.blogapi.core.security.config.JwtConfig;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,12 @@ import java.util.Date;
 import java.util.HashMap;
 
 @Component
-public class JwtTokenUtil {
+public class JwtTokenUtils {
     // 创建token
     public static String createToken(String username, String role) {
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put(JwtConfig.ROLE_CLAIMS, role);
+        map.put(JwtConfig.role_claims, role);
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, JwtConfig.secret)
                 .setClaims(map)
@@ -33,7 +34,11 @@ public class JwtTokenUtil {
 
     // 是否过期； true已过期，false未过期
     public static boolean isExpiration(String token) {
-        return getTokenBody(token).getExpiration().before(new Date());
+        try {
+            return getTokenBody(token).getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
     }
 
     // 从token的串中解析 结构数据
@@ -42,5 +47,9 @@ public class JwtTokenUtil {
                 .setSigningKey(JwtConfig.secret)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public static String getUserRoles(String token){
+        return (String) getTokenBody(token).get(JwtConfig.role_claims);
     }
 }

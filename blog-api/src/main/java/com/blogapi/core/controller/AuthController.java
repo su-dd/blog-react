@@ -13,6 +13,7 @@ import javax.naming.AuthenticationException;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
     private AuthService authService;
 

@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public User register(Map<String,String> registerUser) {
 
-        final String username = registerUser.get("username");
+        final String username = registerUser.get("userName");
         if (userDao.findUserByUserName(username) != null) {
             return null;
         }

@@ -1,13 +1,12 @@
 package com.blogapi.core.security.jwt;
 
-import com.blogapi.core.common.config.JwtConfig;
-import com.blogapi.core.common.util.JwtTokenUtil;
+import com.blogapi.core.security.config.JwtConfig;
+import com.blogapi.core.security.util.JwtTokenUtils;
 import com.blogapi.core.entity.User;
 import com.blogapi.core.security.entity.JwtUser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -65,11 +64,11 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         StringBuilder role = new StringBuilder("");
         Collection<? extends GrantedAuthority> authorities = jwtUser.getAuthorities();
         for (GrantedAuthority authority : authorities) {
-            role.append("&").append(authority.getAuthority());
+            role.append(JwtConfig.role_claims_split).append(authority.getAuthority());
         }
         role.deleteCharAt(0);
 
-        String token = JwtTokenUtil.createToken(jwtUser.getUsername(), role.toString());
+        String token = JwtTokenUtils.createToken(jwtUser.getUsername(), role.toString());
         // 返回创建成功的token
         // 但是这里创建的token只是单纯的token
         // 按照jwt的规定，最后请求的格式应该是 `Bearer token`
